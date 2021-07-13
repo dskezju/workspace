@@ -2,6 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import ElementUI from 'element-ui'
+import Cookies from 'js-cookie'
+
+import './assets/styles/element-variables.scss'
+
+import '@/assets/styles/index.scss' // global css
+import '@/assets/styles/ruoyi.scss' // ruoyi css
+import './assets/icons' // icon
+
+//注册ElementUI插件
+Vue.use(ElementUI, {
+  size: Cookies.get('size') || 'medium' // set element-ui default size
+})
 
 Vue.config.productionTip = false
 
