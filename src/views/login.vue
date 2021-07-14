@@ -2,13 +2,13 @@
   <div class="login">
     <!-- 用ref拿到子组件，model是表单数据对象 -->
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">学习与研究空间</h3>
+      <h3 class="title">研究空间</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
-      <el-form-item prop="password">
+      <el-form-item prop="passwd">
         <!-- 在子组件中监听事件必须用.native -->
         <el-input
           v-model="loginForm.passwd"
@@ -31,6 +31,7 @@
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
         <div class="login-code">
+          <img src='../assets/logo/logo.png' @click='getCode' class="login-code-img"/>
           <img :src="codeUrl" @click="getCode" class="login-code-img"/>
         </div>
       </el-form-item>
@@ -46,7 +47,10 @@
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
-        <el-button @click="resetForm">重置</el-button>
+        <el-button size="small"
+          type="primary" @click="resetForm">重置</el-button>
+        <el-button size="small"
+          type="primary" @click='clearCookie'>清除cookie</el-button>
       </el-form-item>
     </el-form>
     <!--  底部  -->
@@ -60,6 +64,7 @@
 import {getCodeImg} from '@/api/login'
 import Cookies from 'js-cookie'
 import {encrypt, decrypt} from '@/utils/jsencrypt'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Login',
@@ -73,11 +78,11 @@ export default {
         code: '',
         uuid: '',
       },
-      loginRules: { //表单验证规则，对应上面的prop
+      loginRules: { //表单验证规则，对应上面的prop，prop和下面如果不用passwd而用password还会出现奇怪的错误
         username: [
           {required: true, trigger: 'blur', message: "用户名不能为空" }
         ],
-        password: [
+        passwd: [
           { required: true, trigger: "blur", message: "密码不能为空" }
         ],
         code: [{ required: false, trigger: "change", message: "验证码不能为空" }]
@@ -90,39 +95,50 @@ export default {
     $route: {
       handler: function(route){
         this.redirect = route.query && route.query.redirect
+        console.log('in watch $route handler')
       },
-      immediate: true
+      immediate: true, //使得绑定$route时就执行，不然在初始化时（如页面刷新，第一次进入页面）不会执行，只会在发生改变时才执行
     }
   },
   created(){ //创建的时候获取验证码和从cookie中读数据
     this.getCode()
     this.getCookie()
+    //效果和监视watch是一样的，不过如果让login是keep-alive就不管用了
     console.log('this.$route', this.$route)
     this.redirect = this.$route.query && this.$route.query.redirect
+    console.log('this.loginForm:', this.loginForm)
   },
   methods: {
     getCode(){ //获取验证码
       getCodeImg().then(res => { //向服务器请求验证码
-        this.codeUrl = "data:image/gif;base64," + res.img;
+        // this.codeUrl = "data:image/png;base64," + res.img;
+        this.codeUrl = '/img/logo.4eeb8a8e.png'
         this.loginForm.uuid = res.uuid;
+        console.log('in getCode')
       })
     },
     getCookie(){ //从cookies里获取信息，密码解密
+      const username = Cookies.get('username')
       const passwd = Cookies.get('passwd')
+      const rememberMe = Cookies.get('rememberMe')
+
       this.loginForm = {
-        username: Cookies.get('username') || this.loginForm.username,
+        username: username ? username : this.loginForm.username,
         passwd: passwd ? decrypt(passwd) : this.loginForm.passwd,
-        rememberMe: Cookies.get('rememberMe') ? true : false
+        rememberMe: rememberMe == false ? false : true,
       }
+      console.log(this.loginForm)
+      console.log('passwd in cookie:', passwd)
     },
     handleLogin(){ //点击登录
       this.$refs.loginForm.validate(valid => { //拿到el-form子组件，表单验证
         if(valid){ //通过验证
           this.loading = true //修改loading状态
-          if(this.rememberMe){ //往cookie里加入用户名、加密后的密码
-            Cookies.set('username', this.username)
-            Cookies.set('passwd', this.passwd)
-            Cookies.set('rememberMe', this.rememberMe)
+          if(this.loginForm.rememberMe){ //往cookie里加入用户名、加密后的密码
+            Cookies.set('username', this.loginForm.username)
+            //cookie里不能存储密码的明文，可以防止别人偷看浏览器，但这个加密算法写在js里也不安全？
+            Cookies.set('passwd', encrypt(this.loginForm.passwd))
+            Cookies.set('rememberMe', this.loginForm.rememberMe)
           }
           else{ //否则移除它们
             Cookies.remove('username')
@@ -132,7 +148,11 @@ export default {
           this.$store //调用全局方法Login，传入表单对象
             .dispatch('Login', this.loginForm)
             .then(() => { //Login成功
-              this.$route.push({path: this.redirect || '/'}) //跳转到原本要去的地方
+              console.log('login success')
+              Message.info('login success!')
+              console.log('token:', Cookies.get('login-token'))
+              this.$router.push({path: this.redirect || '/'}) //跳转到原本要去的地方
+                          .catch(err => console.log('err:', err))
             })
             .catch(() => { //失败
               this.loading = false
@@ -143,6 +163,11 @@ export default {
     },
     resetForm(){ //重置表单为初始值
       this.$refs.loginForm.resetFields()
+    },
+    clearCookie(){
+      Cookies.remove('username')
+      Cookies.remove('passwd')
+      Cookies.remove('rememberMe')
     }
   }
 }

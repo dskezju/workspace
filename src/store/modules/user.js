@@ -61,7 +61,8 @@ const user = {
           commit('SET_NAME', user.userName)
           commit('SET_AVATAR', avatar)
           resolve(res)
-        }).catch(error => {
+        }).catch(error => { //如果不是自然地从getInfo到.catch，而是在.then里出现如typeError然后进来这儿的话，在之后的执行中会有奇怪的问题，如路由跳转不过去
+          console.log('getInfo failed')
           reject(error)
         })
       })
@@ -84,6 +85,7 @@ const user = {
 
     FedLogOut({commit}){ //在拉取用户信息失败时调用
       return new Promise((resolve, reject) => {
+        console.log('in fedlogout')
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
