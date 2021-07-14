@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout'
 
-const Index = () => import('@/views')
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,32 +24,32 @@ const routes = [
     children: [
       {
         path: 'index',
-        component: Index
+        component: () => import('@/views/index')
       },
       {
         path: 'wiki',
         component: () => import('@/views/wiki')
       },
       {
-        path: 'filelist',
-        component: () => import('@/views/filelist')
+        path: 'file-list',
+        component: () => import('@/views/file-list')
       },
       {
         path: 'projects',
         component: () => import('@/views/projects')
       },
       {
-        path: 'userspace',
-        component: () => import('@/views/userspace'),
+        path: 'user-space',
+        component: () => import('@/views/user-space'),
         redirect: 'profile',
         children: [
           {
             path: 'profile',
-            component: () => import('@/views/userspace/profile')
+            component: () => import('@/views/user-space/profile')
           },
           {
             path: 'learning-space',
-            component: () => import('@/views/userspace/learning-space')
+            component: () => import('@/views/user-space/learning-space')
           }
         ]
       },
@@ -58,6 +57,7 @@ const routes = [
   },
 
 ]
+
 
 const router = new VueRouter({
   mode: 'history',

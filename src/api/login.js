@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import {request} from '@/utils/request'
 
 //登录
 export function login(username, passwd, code, uuid){
@@ -32,6 +32,14 @@ export function logout(){
 
 //获取验证码
 export function getCodeImg(){
+  return new Promise((resolve, reject) => {
+    const res= {
+      uuid: 123,
+      img: '/src/assets/logo/logo.png'
+    }
+    resolve(res)
+  })
+
   return request({
     url: '/captchaImage',
     method: 'get',

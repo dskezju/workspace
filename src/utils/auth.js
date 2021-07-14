@@ -4,7 +4,8 @@ import Cookies from 'js-cookie'
 const TokenKey = 'login-token'
 
 export function getToken(){ //获取登录token
-  console.log('cookies:', Cookies)
+  // console.log('cookies:', Cookies)
+  console.log('Cookies.get(TokenKey):', Cookies.get(TokenKey))
   return Cookies.get(TokenKey)
 }
 

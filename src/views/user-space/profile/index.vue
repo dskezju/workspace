@@ -1,11 +1,11 @@
 <template>
   <div>
-    <router-view/>
+    This is profile
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AppMain',
+  name: 'Profile',
 }
 </script>

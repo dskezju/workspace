@@ -2,7 +2,7 @@
  * @param {string} path
  * @returns {Boolean}
  */
-export function isExternal(path) {
+export function isExternal(path) { //测试path是不是http:|https:|mailto:|tel:开头
   return /^(https?:|mailto:|tel:)/.test(path)
 }
 

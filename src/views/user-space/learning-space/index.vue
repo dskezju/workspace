@@ -1,11 +1,11 @@
 <template>
   <div>
-    <router-view/>
+    This is learning space
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AppMain',
+  name: 'LearningSpace',
 }
 </script>

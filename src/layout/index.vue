@@ -1,6 +1,8 @@
 <template>
     <div>
       this is layout
+      <router-link to='/wiki' tag='button'>wiki</router-link>
+      <router-link to='/index' tag='button'>index</router-link>
       <side-bar/>
       <nav-bar/>
       <app-main/>

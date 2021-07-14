@@ -8,7 +8,7 @@ const service = axios.create({
   timeout: 5000,
 })
 
-export default function request(config){
+export function request(config){
   return new Promise((resolve, reject) => {
     service(config)
       .then(res => { //请求成功

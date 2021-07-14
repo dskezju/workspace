@@ -1,11 +1,11 @@
 <template>
   <div>
-    <router-view/>
+    This is file list
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AppMain',
+  name: 'FileList',
 }
 </script>

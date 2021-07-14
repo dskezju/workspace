@@ -2,7 +2,7 @@
   <div class="login">
     <!-- 用ref拿到子组件，model是表单数据对象 -->
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">研究空间</h3>
+      <h3 class="title">学习与研究空间</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -102,7 +102,6 @@ export default {
   },
   methods: {
     getCode(){ //获取验证码
-    console.log(getCodeImg)
       getCodeImg().then(res => { //向服务器请求验证码
         this.codeUrl = "data:image/gif;base64," + res.img;
         this.loginForm.uuid = res.uuid;
@@ -156,7 +155,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background-image: url("~@/assets/images/login-background.jpg");
   background-size: cover;
 }
 .title {

@@ -1,7 +1,8 @@
 import router from '@/router'
 import store from '@/store'
 import NProgress from 'nprogress'
-import {getToken} from '@/api/auth'
+import 'nprogress/nprogress.css'
+import {getToken} from '@/utils/auth'
 import { Message } from 'element-ui'
 
 //进度条
@@ -12,9 +13,11 @@ const whiteList = ['/login']
 
 //每次进入一个路由时都要检查身份，是否已登录
 router.beforeEach((to, from, next) => {
+  console.log('in beforeEach')
   NProgress.start()
   //从cookies获取登录token，token是登录时服务器分配的
   if(getToken()){
+    console.log('token:', getToken())
     if(to.path === '/login'){
       next({path: '/'}) //有登录token，但这个token不验证？
       NProgress.done()
@@ -52,5 +55,6 @@ router.beforeEach((to, from, next) => {
 
 //每条路由跳转后
 router.afterEach(() => {
+  console.log('in afterEach')
   NProgress.done()
 })
