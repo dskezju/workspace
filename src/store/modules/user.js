@@ -6,7 +6,7 @@ const user = {
   state: {
     token: getToken(),
     name: '',
-    avatar: '',
+    avatar: '', //在getInfo时获取，如果为空就设置成默认的
     roles: [],
     permissions: [],
   },
@@ -49,7 +49,7 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token).then(res => {
+        getInfo(state.token).then(res => { //在这里返回的avatar是""的话就设置成默认的
           const user = res.user
           const avatar = user.avatar == "" ? require("@/assets/images/profile.jpg") : process.env.VUE_APP_BASE_API + user.avatar;
           if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
@@ -68,7 +68,7 @@ const user = {
       })
     },
 
-    logOut({commit, state}){
+    LogOut({commit, state}){
       //返回一个Promise
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => { //如果logout成功了，进入then

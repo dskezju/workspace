@@ -6,7 +6,7 @@ const state = {
     withoutAnimation: false
   },
   device: 'desktop',
-  size: Cookies.get('size') || 'medium' //size
+  size: Cookies.get('size') || 'medium' //从cookie里获取size，没有的话就是medium
 }
 
 const mutations = {

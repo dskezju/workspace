@@ -32,6 +32,13 @@ export function getInfo(){
 
 //登出，同样可以知道是谁在登出
 export function logout(){
+  return new Promise((resolve, reject) => {
+    const res= {
+      uuid: 123,
+      img: '/src/assets/logo/logo.png'
+    }
+    resolve(res)
+  })
   return request({
     url: '/logout',
     method: 'post',

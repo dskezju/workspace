@@ -5,6 +5,7 @@ export default {
   token: state => state.user.token,
   name: state => state.user.name,
   roles: state => state.user.roles,
+  avatar: state => state.user.avatar,
   //权限目前用不上
   // permissions: state => state.user.permissions,
 }

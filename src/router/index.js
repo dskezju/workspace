@@ -24,7 +24,9 @@ const routes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/index')
+        component: () => import('@/views/index'),
+        name: '首页', //由于在面包屑里判断是不是首页路由分根据是有没有name:首页，所以不这样的话就会没有首页，面包屑里就又会加一个首页，导致key=item.path重复了
+        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true },
       },
       {
         path: 'wiki',
