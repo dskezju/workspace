@@ -149,7 +149,7 @@ export default {
             .dispatch('Login', this.loginForm)
             .then(() => { //Login成功
               console.log('login success')
-              Message.info('login success!')
+              Message.success('login success!')
               console.log('token:', Cookies.get('login-token'))
               this.$router.push({path: this.redirect || '/'}) //跳转到原本要去的地方
                           .catch(err => console.log('err:', err))

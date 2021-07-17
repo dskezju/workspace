@@ -18,36 +18,42 @@
         <app-link to="/">
           <el-menu-item index="1" :class="{'submenu-title-noDropdown':true}">
             <!-- item就是封装了一下icon和title -->
-            <item icon="user" title="首页" />
+            <item icon="tree" title="首页" />
           </el-menu-item>
         </app-link>
 
         <app-link to="/wiki">
           <el-menu-item index="2" :class="{'submenu-title-noDropdown':true}">
-            <item icon="table" title="Wiki" />
+            <item icon="education" title="Wiki" />
           </el-menu-item>
         </app-link>
 
         <app-link to="/file-list">
           <el-menu-item index="3" :class="{'submenu-title-noDropdown':true}">
-            <item icon="github" title="文件区" />
+            <item icon="documentation" title="文件区" />
+          </el-menu-item>
+        </app-link>
+
+        <app-link to="/projects">
+          <el-menu-item index="3" :class="{'submenu-title-noDropdown':true}">
+            <item icon="dashboard" title="项目管理" />
           </el-menu-item>
         </app-link>
 
         <el-submenu ref="subMenu" index="4" popper-append-to-body>
           <template slot="title">
-            <item icon="user" title="学习空间" />
+            <item icon="user" title="个人空间" />
           </template>
 
           <app-link to="/user-space/profile">
             <el-menu-item index="4-1" :class="{'submenu-title-noDropdown':false}">
-              <item icon="tab" title="项目管理" />
+              <item icon="system" title="个人信息" />
             </el-menu-item>
           </app-link>
 
           <app-link to="/user-space/learning-space">
             <el-menu-item index="4-2" :class="{'submenu-title-noDropdown':false}">
-              <item icon="shopping" title="学习空间" />
+              <item icon="server" title="学习空间" />
             </el-menu-item>
           </app-link>
         </el-submenu>

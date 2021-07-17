@@ -112,7 +112,8 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => { //登出
-          location.href = '/index'; //立刻跳转
+          // location.href = '/index'; //立刻跳转
+          this.$router.push({path: '/login'})
         })
       }).catch(() => {});
     }
