@@ -30,28 +30,33 @@ const routes = [
       },
       {
         path: 'wiki',
-        component: () => import('@/views/wiki')
+        component: () => import('@/views/wiki'),
+        meta: { title: 'Wiki', icon: 'dashboard', noCache: true, affix: true },
       },
       {
         path: 'file-list',
-        component: () => import('@/views/file-list')
+        component: () => import('@/views/file-list'),
+        meta: { title: '文件区', icon: 'dashboard', noCache: true, affix: true },
       },
       {
         path: 'projects',
-        component: () => import('@/views/projects')
+        component: () => import('@/views/projects'),
+        meta: { title: '项目管理', icon: 'dashboard', noCache: true, affix: true },
       },
       {
-        path: 'user-space',
+        path: 'user-space/',
         component: () => import('@/views/user-space'),
-        redirect: 'profile',
+        redirect: 'user-space/profile',
         children: [
           {
             path: 'profile',
-            component: () => import('@/views/user-space/profile')
+            component: () => import('@/views/user-space/profile'),
+            meta: { title: '个人中心', icon: 'dashboard', noCache: true, affix: true },
           },
           {
             path: 'learning-space',
-            component: () => import('@/views/user-space/learning-space')
+            component: () => import('@/views/user-space/learning-space'),
+            meta: { title: '学习空间', icon: 'dashboard', noCache: true, affix: true },
           }
         ]
       },

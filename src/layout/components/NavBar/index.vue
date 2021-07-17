@@ -40,7 +40,7 @@
             <span>布局设置</span>
           </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
-            <span>退出登录</span>
+            <span>退出系统</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

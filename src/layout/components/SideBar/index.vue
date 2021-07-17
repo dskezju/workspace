@@ -36,16 +36,16 @@
 
         <el-submenu ref="subMenu" index="4" popper-append-to-body>
           <template slot="title">
-            <item icon="user" title="个人空间" />
+            <item icon="user" title="学习空间" />
           </template>
 
-          <app-link to="/profile">
+          <app-link to="/user-space/profile">
             <el-menu-item index="4-1" :class="{'submenu-title-noDropdown':false}">
-              <item icon="tab" title="个人信息" />
+              <item icon="tab" title="项目管理" />
             </el-menu-item>
           </app-link>
 
-          <app-link to="/learning-space">
+          <app-link to="/user-space/learning-space">
             <el-menu-item index="4-2" :class="{'submenu-title-noDropdown':false}">
               <item icon="shopping" title="学习空间" />
             </el-menu-item>
