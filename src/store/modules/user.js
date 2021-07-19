@@ -6,7 +6,7 @@ const user = {
   state: {
     token: getToken(),
     name: '',
-    avatar: '', //在getInfo时获取，如果为空就设置成默认的
+    avatar: '', //在getInfo时获取，如果为空就会设置成默认的
     roles: [],
     permissions: [],
   },

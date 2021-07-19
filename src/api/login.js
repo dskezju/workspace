@@ -60,3 +60,13 @@ export function getCodeImg(){
     method: 'get',
   })
 }
+
+const routes = [
+
+]
+export function getRouters(){
+  return new Promise(resolve => {
+    const res = {data: routes}
+    resolve(res)
+  })
+}

@@ -14,10 +14,16 @@
         :collapse-transition="false"
         mode="vertical"
       >
+        <sidebar-item
+          v-for="(route, index) in sidebarRouters"
+          :key="route.path  + index"
+          :item="route"
+          :base-path="route.path"
+        />
         <!-- app-link会变成一个router-link或者<a>，里面包裹着el-menu-item实现路由跳转 -->
-        <app-link to="/">
+        <!-- item就是封装了一下icon和title -->
+        <!-- <app-link to="/">
           <el-menu-item index="1" :class="{'submenu-title-noDropdown':true}">
-            <!-- item就是封装了一下icon和title -->
             <item icon="tree" title="首页" />
           </el-menu-item>
         </app-link>
@@ -56,7 +62,7 @@
               <item icon="server" title="学习空间" />
             </el-menu-item>
           </app-link>
-        </el-submenu>
+        </el-submenu> -->
 
       </el-menu>
     </el-scrollbar>
@@ -65,6 +71,7 @@
 
 <script>
 import {mapGetters, mapState} from 'vuex'
+import SidebarItem from './SidebarItem'
 import variables from '@/assets/styles/variables.scss'
 import Item from './Item'
 import AppLink from './Link'
@@ -76,10 +83,11 @@ export default {
     Item,
     AppLink,
     Logo,
+    SidebarItem,
   },
   computed: {
     ...mapState(['settings']), //将$store.state.settings搬到this里面来
-    ...mapGetters(['sidebar']), //将getters里的sidebar搬到this里来，就不用this.$store.commit('sidebar')，而是this.sidebar了
+    ...mapGetters(['sidebar', 'sidebarRouters']), //将getters里的sidebar搬到this里来，就不用this.$store.commit('sidebar')，而是this.sidebar了
     activeMenu() { //默认进入哪一个menu，每一个路由都可以在meta里设置
       const route = this.$route;
       const { meta, path } = route;
