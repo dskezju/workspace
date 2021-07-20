@@ -11,10 +11,10 @@ export default {
   name: 'Screenfull',
   data() {
     return {
-      isFullscreen: false
+      isFullscreen: false //控制图标的切换
     }
   },
-  mounted() {
+  mounted() { //挂载上去时执行
     this.init()
   },
   beforeDestroy() {
@@ -26,18 +26,18 @@ export default {
         this.$message({ message: '你的浏览器不支持全屏', type: 'warning' })
         return false
       }
-      screenfull.toggle()
+      screenfull.toggle() //切换全屏
     },
-    change() {
+    change() { //更新this.isFullScreen，好切换图标
       this.isFullscreen = screenfull.isFullscreen
     },
     init() {
       if (screenfull.isEnabled) {
-        screenfull.on('change', this.change)
+        screenfull.on('change', this.change) //监听事件，改变的时候就调用this.change()
       }
     },
     destroy() {
-      if (screenfull.isEnabled) {
+      if (screenfull.isEnabled) { //取消监听事件
         screenfull.off('change', this.change)
       }
     }

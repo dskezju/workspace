@@ -1,13 +1,17 @@
 <template>
   <!-- 设置了hidden:true的路由包括其子路由不显示 -->
   <div v-if="!item.hidden">
+
     <!-- 当前路由只有1个或没有child的话，如果没有设置item.alwaysShow为true，就会直接显示child而不显示它自己 -->
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+
+      <!-- hidden为true的情况下，还得有meta才会构成menu-item -->
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
           <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
       </app-link>
+
     </template>
 
     <!-- 否则作为sub-menu递归下去 -->
@@ -16,6 +20,7 @@
         <!-- 如果parent路由没有设置meta的话，就没有title和icon -->
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
+      <!-- 递归，更改base-path为加上当前路由 -->
       <sidebar-item
         v-for="child in item.children"
         :key="child.path"
@@ -95,7 +100,7 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath)
+      return path.resolve(this.basePath, routePath) //两个path拼起来，其实就是parent的path拼上child的path
     }
   }
 }

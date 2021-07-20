@@ -3,7 +3,9 @@
   <div :class="{'has-logo':showLogo}" :style="{ backgroundColor: settings.sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }">
     <!-- 展示logo -->
     <logo v-if="showLogo" :collapse="isCollapse" />
+    <!-- 用一个滚动条组件包裹menu -->
     <el-scrollbar :class="settings.sideTheme" wrap-class="scrollbar-wrapper">
+      <!-- 垂直导航栏 -->
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
@@ -14,6 +16,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
+        <!-- 对sidebarRouters里的每个route应用sidebar-item -->
         <sidebar-item
           v-for="(route, index) in sidebarRouters"
           :key="route.path  + index"

@@ -64,6 +64,7 @@ const permission = { //没有namespaced
           console.log('sidebarRoutes:', sidebarRoutes)
 
           //在末尾添加 * 匹配/404，就是把所有前面找不到的路由都重定向到/404去
+          //即使没有动态路由，但redirect到404也是必须的，不然跳转网址不存在就会没反应
           rewriteRoutes.push({ path: '*', redirect: '/404', hidden: true })
           commit('SET_ROUTES', rewriteRoutes)
           //侧边栏routes就是静态路由+动态路由
