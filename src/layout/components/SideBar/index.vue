@@ -101,7 +101,6 @@ export default {
       return path; //否则返回当前路由path
     },
     showLogo() { //是否展示sidebar logo
-      console.log(this.$store.state.settings.sidebarLogo)
       return this.$store.state.settings.sidebarLogo;
     },
     variables() {

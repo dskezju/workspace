@@ -14,7 +14,7 @@ const state = {
   topNav:  storageSetting.topNav === undefined ? topNav : storageSetting.topNav,
   tagsView: storageSetting.tagsView === undefined ? tagsView : storageSetting.tagsView,
   fixedHeader: storageSetting.fixedHeader === undefined ? fixedHeader : storageSetting.fixedHeader,
-  sidebarLogo: storageSetting.sidebarLogo === undefined ? sidebarLogo : storageSetting.sidebarLogo,
+  sidebarLogo: storageSetting.sidebarLogo === undefined ? sidebarLogo : storageSetting.sidebarLogo, //是否显示sidebar的logo
   dynamicTitle: storageSetting.dynamicTitle === undefined ? dynamicTitle : storageSetting.dynamicTitle
 }
 const mutations = {

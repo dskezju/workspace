@@ -87,9 +87,9 @@ export default {
       get() {
         return this.$store.state.settings.showSettings
       },
-      set(val) {
+      set(val) { //更改setting时调用
         this.$store.dispatch('settings/changeSetting', {
-          key: 'showSettings',
+          key: 'showSettings', //调用changeSetting，将showSettings设置为val
           value: val
         })
       }

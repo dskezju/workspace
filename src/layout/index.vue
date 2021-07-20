@@ -1,30 +1,41 @@
 <template>
   <div>
     <div :class="classObj" class="app-wrapper" :style="{'--current-color': theme}">
+
       <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
       <!-- 显示侧边栏 -->
       <side-bar class="sidebar-container" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }" />
+
       <div :class="{hasTagsView:needTagsView}" class="main-container">
+        <!-- 显示导航栏 -->
         <div :class="{'fixed-header':fixedHeader}">
-          <!-- 显示导航栏 -->
           <nav-bar />
         </div>
+        <!-- app主体页面，其实是一个router-view -->
         <app-main />
+
+        <!-- 在右边显示设置，用settings.showSettings来控制 -->
+        <right-panel v-if="showSettings">
+          <settings></settings>
+        </right-panel>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { AppMain, NavBar, SideBar } from './components'
+import RightPanel from '@/components/RightPanel'
+import { AppMain, NavBar, Settings, SideBar } from './components'
 import { mapState } from 'vuex'
 import variables from '@/assets/styles/variables.scss'
 export default {
   name: 'Layout',
-  components: {
+  components: { //如果提示找不到组件那就是没有在index.js里export
     AppMain,
     NavBar,
     SideBar,
+    RightPanel,
+    Settings,
   },
   computed: {
     ...mapState({ //将$store.state里的东西搬到this里面来
