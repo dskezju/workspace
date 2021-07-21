@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import Cookies from 'js-cookie'
+import directive from './directive' //directive
+
 
 import '@/assets/styles/element-variables.scss'
 
@@ -11,6 +13,17 @@ import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/ruoyi.scss' // ruoyi css
 import '@/assets/icons' // icon
 import '@/permission'  //一定要import不然不会执行这里面的代码的
+import Pagination from "@/components/Pagination";
+import RightToolbar from "@/components/RightToolbar"
+import Editor from '@/components/Editor'
+
+
+Vue.component('Pagination', Pagination) //分页
+Vue.component('RightToolbar', RightToolbar)
+Vue.component('Editor', Editor)
+
+Vue.use(directive) //directive里返回的是一个install
+
 
 //注册ElementUI插件
 Vue.use(ElementUI, {

@@ -186,6 +186,7 @@ export default {
       );
       setTimeout(loading.close(), 1000)
     },
+
     resetSetting() {
       this.$loading({
         lock: true,
