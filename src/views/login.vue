@@ -151,8 +151,11 @@ export default {
               console.log('login success')
               Message.success('login success!')
               console.log('token:', Cookies.get('login-token'))
-              this.$router.push({path: this.redirect || '/'}) //跳转到原本要去的地方
-                          .catch(err => console.log('err:', err))
+              // this.$router.push({path: this.redirect || '/'}) //跳转到原本要去的地方
+              //             .catch(err => console.log('err:', err))
+              // this.$router.back() //返回原本的地方
+              // this.$router.push({path: 'http://www.baidu.com'}) //跳转不过去
+              window.location.href = this.redirect //自动识别是不是外部地址
             })
             .catch(() => { //失败
               this.loading = false
