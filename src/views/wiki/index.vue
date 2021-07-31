@@ -1,6 +1,6 @@
 <template>
   <div>
-    This is wiki
+    <a :href="wiki_href" target="WikiPage">blog</a>
     <Notice/>
     <editor :min-height="192" />
     <v-md-editor
@@ -23,6 +23,8 @@
 <script>
 import Notice from './notice'
 import MarkdownEditor from '@/components/MarkdownEditor'
+import { getToken} from '@/utils/auth'
+import getters from '@/store/getters'
 
 export default {
   name: 'Wiki',
@@ -80,6 +82,15 @@ export default {
         subfield: false, //不分栏，只显示单栏
         defaultOpen: 'preview' //默认显示预览，这样就可以拿到内容后直接放进value里，直接用它渲染的方式只显示预览
       }
+    }
+  },
+  computed:{
+    wiki_href(){
+      let base = 'http://localhost:8003'
+      if(getToken()){
+        return base + '?loginToken=' + getToken()
+      }
+      return base
     }
   },
   methods: {
