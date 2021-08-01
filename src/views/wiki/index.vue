@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="wiki_href" target="WikiPage">blog</a>
+    <a id='a-link' :href="wiki_href" target="WikiPage">blog</a>
     <Notice/>
     <editor :min-height="192" />
     <v-md-editor
@@ -84,6 +84,9 @@ export default {
       }
     }
   },
+  mounted(){
+    document.getElementById("a-link").click()
+  },
   computed:{
     wiki_href(){
       let base = process.env.VUE_APP_WIKI_URL
@@ -106,7 +109,7 @@ export default {
       console.log('event:', event)
       console.log(insertImage)
       //mavon-editor的html渲染结果在其实例的d_render里
-      // console.log('md:', this.editor1.ref.d_render)
+      console.log('md:', this.editor1.ref.d_render)
       this.editor2.value = this.editor1.value
       console.log('v-md-editor:', this.$refs.v_editor)
 

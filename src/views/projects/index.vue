@@ -1,6 +1,6 @@
 <template>
   <div>
-    This is projects
+    <img src='@/assets/images/200.jpg'/>
   </div>
 </template>
 
