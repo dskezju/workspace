@@ -47,10 +47,10 @@
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
-        <el-button size="small"
+        <!-- <el-button size="small"
           type="primary" @click="resetForm">重置</el-button>
         <el-button size="small"
-          type="primary" @click='clearCookie'>清除cookie</el-button>
+          type="primary" @click='clearCookie'>清除cookie</el-button> -->
       </el-form-item>
     </el-form>
     <!--  底部  -->
@@ -155,7 +155,9 @@ export default {
               //             .catch(err => console.log('err:', err))
               // this.$router.back() //返回原本的地方
               // this.$router.push({path: 'http://www.baidu.com'}) //跳转不过去
-              window.location.href = this.redirect || '/' //自动识别是不是外部地址
+              setTimeout(()=>{
+                window.location.href = this.redirect || '/' //自动识别是不是外部地址
+              }, 500)
             })
             .catch(() => { //失败
               this.loading = false

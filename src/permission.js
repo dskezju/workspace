@@ -15,6 +15,7 @@ const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
   console.log('in beforeEach')
   console.log('to:', to)
+  console.log('from:', from)
   NProgress.start()
   //从cookies获取登录token，token是登录时服务器分配的
   if(getToken()){

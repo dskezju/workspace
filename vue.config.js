@@ -6,6 +6,8 @@ function resolve (dir) {
 
 const name = '研究空间'
 
+process.env.VUE_APP_WIKI_URL = 'http://localhost:8003'
+
 module.exports = {
   outputDir: 'docs',
   publicPath: process.env.NODE_ENV === 'production' ? '/workspace/' : '/',

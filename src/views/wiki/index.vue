@@ -86,9 +86,9 @@ export default {
   },
   computed:{
     wiki_href(){
-      let base = 'http://localhost:8003'
+      let base = process.env.VUE_APP_WIKI_URL
       if(getToken()){
-        return base + '?loginToken=' + getToken()
+        return base + '/login?loginToken=' + getToken()
       }
       return base
     }

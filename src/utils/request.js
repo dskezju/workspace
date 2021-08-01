@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import { getToken } from './auth'
+import store from '@/store'
 
 const errorCode = {
   '401': '认证失败，无法访问系统资源',
@@ -18,10 +19,10 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(config => { //发送前拦截config
-  const isToken = (config.headers || {}).isToken === false
-  if(getToken() && !isToken){ //如果需要token
-    config.headers['Authorization'] = getToken() //在字段里带上token
-  }
+  // const isToken = (config.headers || {}).isToken === false
+  // if(getToken() && !isToken){ //如果需要token
+  //   config.headers['Authorization'] = getToken() //在字段里带上token
+  // }
   // get请求映射params参数
   //就是把params里的键值对变成key=value，如果key本身是对象就迭代一层
   //有这个必要？
@@ -45,6 +46,9 @@ service.interceptors.request.use(config => { //发送前拦截config
   //   url = url.slice(0, -1);
   //   config.params = {};
   //   config.url = url;
+  if (store.state.token) { //如果有token就放在头部
+    config.headers['Oauth-Token'] = getToken()
+  }
   return config
 }, err => {
   console.log(err)
@@ -54,30 +58,55 @@ service.interceptors.request.use(config => { //发送前拦截config
 service.interceptors.response.use(res => { //拦截response
     const code = res.data.code || 200
     const msg = errorCode[code] || res.data.msg || errorCode['default']
-    if(code === 401){
-      MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-          confirmButtonText: '重新登录', //点击这个后进入then
-          cancelButtonText: '取消', //点击这个进入catch？
-          type: 'warning'
-        }
-      ).then(() => {
-        store.dispatch('LogOut').then(() => {
-          location.href = '/index';
+
+    //全局统一处理 Session超时
+    if (res.headers['session_time_out'] == 'timeout') {
+      Message.error('登录超时')
+    }
+    console.log('code:', code)
+
+    //200 为成功状态
+    if (res.code !== 200) {
+
+      //90001 Session超时
+      if (res.code === 90001) {
+        MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+            confirmButtonText: '重新登录', //点击这个后进入then
+            cancelButtonText: '取消', //点击这个进入catch
+            type: 'warning'
+          }
+        ).then(() => {
+            store.dispatch('LogOut').then(() => {
+            location.href = '/index';
+          })
+        }).catch(err => {console.log(err)})
+      }
+
+      //20001 用户未登录
+      if (res.code === 20001) {
+        console.info("用户未登录")
+
+        Message({
+          type: 'warning',
+          showClose: true,
+          message: '未登录或登录超时，请重新登录哦'
         })
-      }).catch(err => {console.log(err)})
-    }
-    else if(code === 500){
-      Message({
-        message: msg,
-        type: 'error',
-      })
-      return Promise.reject(new Error(msg))
-    }
-    else if(code != 200){
-      Notification.error({
-        title: msg,
-      })
-      return Promise.reject('error')
+
+        return Promise.reject('error');
+      }
+
+      //70001 权限认证错误
+      if (res.code === 70001) {
+        console.info("权限认证错误")
+        Message({
+          type: 'warning',
+          showClose: true,
+          message: '你没有权限访问哦'
+        })
+        return Promise.reject('error');
+      }
+
+      return Promise.reject(res.msg);
     }
     return res.data //返回服务器返回的数据
   },
